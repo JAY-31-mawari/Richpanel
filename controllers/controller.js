@@ -26,7 +26,7 @@ const postLogin = async(req,res) => {
         let user=await Users.findOne({email})
         if(!user)
         {
-            return res.json({success:false,msg:"User not found"})
+            return res.json({success:false,msg:"Email ID not found"})
         }
 
         let isPasswordCorrect=await user.comparePassword(password) 
