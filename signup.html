@@ -25,9 +25,9 @@
             border-radius:2%;
         }
         .form-heading{
-            display:grid;
-            place-items:center;
+            text-align: center;
             margin-top:10px;
+            font-size: 24px;
         }
         .form-details{
             width:80%;
@@ -43,25 +43,49 @@
             font-size:20px;
             margin-top:10px;
         }
-        input{
-            font-size:20px;
-            font-weight: 400;
-        }
         input[type='checkbox']{
             margin-right: 10px;
         }
         button{
             font-size:20px;
-            padding:4px 0;
+            padding:6px 0;
             font-weight: 400;
             background-color: rgb(12, 12, 170);
             color:white;
+            cursor: pointer;
             border:none;
+        }
+        input{
+            font-size:22px;
+            padding:10px;
+            border-radius: 4px;
+            margin-top:4px;
         }
         p{
             font-weight: 400;
             font-size:18px;
             margin:4px auto;
+        }
+        .error{
+            width:80%;
+            background: #d6172a;
+            color: #f8d7da;
+            font-size:24px;
+            padding: 10px 0px;
+            color:white;
+            margin:0 auto;
+            text-align: center;
+            border-radius:8px;
+        }
+        .success{
+            width:80%;
+            background: #399650;
+            color: #d4edda;
+            font-size: 20px;
+            padding: 8px 0px;
+            border-radius:8px;
+            margin:0 auto;
+            text-align: center;
         }
     </style>
   </head>
@@ -69,6 +93,7 @@
     <div class="container-1">
         <div class="container-2">
             <div class="form-container">
+                <p class="alert"></p>
                 <div class="form-heading">
                     <h3>Create Account</h3>
                 </div>
@@ -99,6 +124,16 @@
         </div>
     </div>
     <script>
+        var alertElement=document.querySelector('.alert')
+        function displayalert(action,message){
+            alertElement.textContent=message
+            alertElement.classList.add(action)
+            setTimeout(()=>{
+                alertElement.textContent=''
+                alertElement.classList.remove(action)
+            },1000)
+        }
+
         document.addEventListener('DOMContentLoaded',function(){
             let submit=document.getElementById('submit')
             
@@ -112,7 +147,6 @@
                         input.value=''
                     }
                 })
-                console.log(details)
                 
                 
                 fetch('https://richpanel-nxc4.onrender.com/api/v1/signup',{
@@ -124,10 +158,16 @@
                 }).then((res)=>{
                     return res.json()
                 }).then((data)=>{
-                    console.log(data)
+                    if(data.success === false)
+                    {
+                        displayalert('error',data.msg)
+                    }
                     if(data.success === true)
                     {
-                        location.href="/connect"
+                        displayalert('success',data.msg)
+                        setTimeout(()=>{
+                            location.href='/connect'
+                        },1000)
                     }
                 })
             }

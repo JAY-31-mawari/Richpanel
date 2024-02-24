@@ -14,7 +14,7 @@ const postSignUp = async(req,res) => {
             secure:true,
         })
 
-        res.json({success:true,msg:user})
+        res.json({success:true,msg:'Account Created Successfully'})
     } catch (error) {
         res.json({success:false,msg:"Error in signup data to database"})
     }
@@ -56,7 +56,7 @@ const deleteData = async(req,res) => {
         const payload=await jwt.verify(token,process.env.SECRET_KEY)
         let email=payload.email
         const result=await Users.findOneAndDelete({email})
-        res.json({success:true,msg:'Data Deleted Successfully'})
+        res.json({success:true,msg:'Account Deleted Successfully'})
     }catch(error){
         console.log("Authentication Failed")
         res.json({success:false,msg:"Authentication Failed"})

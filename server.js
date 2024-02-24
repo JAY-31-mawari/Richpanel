@@ -10,9 +10,13 @@ const fs=require('fs')
 const router=require('./routes/routes')
 const connectDB=require('./db/connect')
 
+app.use('/static', express.static('static'));
+app.use(express.urlencoded());
+
 app.use(cors())
 app.use(express.json())
 app.use(cookieParser())
+
 
 app.get("/",(req,res)=>{
     res.sendFile(path.join(__dirname+'/signup.html'))
@@ -28,6 +32,10 @@ app.get("/connect",(req,res)=>{
 
 app.get('/permission',(req,res)=>{
     res.sendFile(path.join(__dirname+'/permission.html'))
+})
+
+app.get('/dashboard',(req,res)=>{
+    res.sendFile(path.join(__dirname+'/dashboard.html'))
 })
 
 app.use('/api/v1/',router)
