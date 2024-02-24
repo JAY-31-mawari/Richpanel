@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign up</title>
+    
+    <style>
+        
+        .container-1{
+            font-family: Roboto,Arial,sans-serif;
+            background-color: rgb(12, 12, 170);
+            width:100vw;
+            height:100vh;
+            display:flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container-2{
+            padding-top:14px;
+            padding-bottom:18px;
+            width:25%;
+            height:auto;
+            background-color: white;
+            border-radius:2%;
+        }
+        .form-heading{
+            display:grid;
+            place-items:center;
+            margin-top:10px;
+        }
+        .form-details{
+            width:80%;
+            margin:0 auto;
+        }
+        .form-inputs{
+            display:flex;
+            flex-direction: column;
+            margin: 10px 0;
+        }
+        label{
+            font-weight: 500;
+            font-size:20px;
+            margin-top:10px;
+        }
+        input{
+            font-size:20px;
+            font-weight: 400;
+        }
+        input[type='checkbox']{
+            margin-right: 10px;
+        }
+        button{
+            font-size:20px;
+            padding:4px 0;
+            font-weight: 400;
+            background-color: rgb(12, 12, 170);
+            color:white;
+            border:none;
+        }
+        p{
+            font-weight: 400;
+            font-size:18px;
+            margin:4px auto;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="container-1">
+        <div class="container-2">
+            <div class="form-container">
+                <div class="form-heading">
+                    <h3>Create Account</h3>
+                </div>
+                <div class="form-details">
+                    <div class="form-inputs">
+                        <label>Name</label>
+                        <input type="text"  name="name" placeholder="Manoj Kumar">
+                    </div>
+                    <div class="form-inputs">
+                        <label>Email</label>
+                        <input type="email" placeholder="manoj@richpanel.com" name="email">
+                    </div>
+                    <div class="form-inputs">
+                        <label>Password</label>
+                        <input type="password" placeholder="............." name="password">
+                    </div>
+                    <div class="form-inputs">
+                        <label><input type="checkbox">Remember Me</label>
+                    </div>
+                    <div class="form-inputs">
+                        <button type="button" id="submit">Sign Up</button>
+                    </div>
+                    <div class="form-inputs">
+                        <p>Already have an account?<a href="/login">Login</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded',function(){
+            let submit=document.getElementById('submit')
+            
+            function sendData(){
+                let inputs=document.querySelectorAll('input')
+                let details={}
+                inputs.forEach((input)=>{
+                    if(input.type !== 'checkbox')
+                    {
+                        details[input.name]=input.value
+                        input.value=''
+                    }
+                })
+                console.log(details)
+                
+
+                fetch('http://localhost:4000/api/v1/signup',{
+                    method:'POST',
+                    headers:{
+                        'Content-type':'application/json',
+                    },
+                    body:JSON.stringify(details)
+                }).then((res)=>{
+                    return res.json()
+                }).then((data)=>{
+                    console.log(data)
+                    if(data.success === true)
+                    {
+                        location.href="/connect"
+                    }
+                })
+            }
+            
+            submit.addEventListener('click',function(){
+                sendData();
+            })
+
+        })
+    </script>
+  </body>
+</html>
