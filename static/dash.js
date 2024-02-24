@@ -39,6 +39,6 @@ send.addEventListener('click',()=>{
         timestamp:new Date().toLocaleString('en-US',{hour:'numeric',minute:'numeric',hour12:true})
     }
     chatMessages.innerHTML+=chatMessageElement(message)
-    
+    chatInput.value=''
     chatMessages.scrollTop=chatMessages.scrollHeight
 })
