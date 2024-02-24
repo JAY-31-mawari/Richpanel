@@ -14,11 +14,7 @@ app.use(cors())
 app.use(express.json())
 app.use(cookieParser())
 
-app.get('/',(req,res)=>{
-    res.send(`App is successfully running on port 4000 <button type="button"><a href="/signup">Sign Up</a></button>`)
-})
-
-app.get("/signup",(req,res)=>{
+app.get("/",(req,res)=>{
     res.sendFile(path.join(__dirname+'/signup.html'))
 })
 
